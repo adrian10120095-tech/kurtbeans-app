@@ -86,13 +86,24 @@ class CustomerController extends Controller
             return redirect('/')->with('error', 'Silakan scan QR Code di meja Anda terlebih dahulu untuk memulai pemesanan.');
         }
 
-        $kategori = Kategori::query()->with(['menu' => function ($query) {
-            $query->where('status_menu', 'Tersedia');
-        }])->get();
-
         $nomor_meja = session('nomor_meja');
+        $galatMenu  = null;
 
-        return view('customer.menu', compact('kategori', 'nomor_meja'));
+        // Extension 2A pada Tabel 3.10: bila data menu gagal diambil
+        // (mis. koneksi ke basis data terputus), halaman tetap tampil
+        // dengan katalog kosong disertai pesan panduan, bukan layar error.
+        try {
+            $kategori = Kategori::query()->with(['menu' => function ($query) {
+                $query->where('status_menu', 'Tersedia');
+            }])->get();
+        } catch (\Throwable $e) {
+            Log::error('Gagal memuat katalog menu: ' . $e->getMessage());
+
+            $kategori   = collect();
+            $galatMenu  = 'Gagal memuat menu, periksa koneksi anda.';
+        }
+
+        return view('customer.menu', compact('kategori', 'nomor_meja', 'galatMenu'));
     }
 
     // ================= PROSES CHECKOUT & PAYMENT GATEWAY =================

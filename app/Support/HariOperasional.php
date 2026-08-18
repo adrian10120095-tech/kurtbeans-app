@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 /**
  * HARI OPERASIONAL
  * ================
- * Kurtbeans beroperasi pukul 18.00 - 03.00, sehingga satu malam kerja
+ * Kurtbeans beroperasi pukul 18.00 - 02.00, sehingga satu malam kerja
  * melewati pergantian tanggal kalender. Kelas ini menerjemahkan waktu
  * nyata menjadi "hari operasional" supaya seluruh laporan, antrean, dan
  * dashboard memakai satuan waktu yang sama dengan cara kerja kedai.

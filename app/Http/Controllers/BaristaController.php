@@ -149,6 +149,16 @@ class BaristaController extends Controller
     {
         $pesanan = Pesanan::query()->with('pelanggan')->findOrFail($id);
 
+        // Tabel 4.21 (Kasus Data Salah): pesanan yang belum lunas tidak
+        // boleh berpindah status. Penjagaan yang sama sudah ada pada
+        // mulaiProses(), jadi seluruh perpindahan status kini konsisten.
+        if ($pesanan->status_pembayaran !== 'Lunas') {
+            if ($request->wantsJson()) {
+                return response()->json(['status' => 'error', 'message' => 'Pesanan belum lunas, status tidak dapat diubah.'], 422);
+            }
+            return redirect()->back()->with('error', 'Pesanan belum lunas, status tidak dapat diubah.');
+        }
+
         $pesanan->update([
             'status_pesanan' => 'Siap Diambil',
             'tgl_selesai'    => now()

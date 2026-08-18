@@ -215,6 +215,33 @@
                                 <h4 class="font-bold text-sm text-gray-800 tracking-wider uppercase">BARU / MASUK</h4>
                             </div>
                             
+                            <div class="space-y-4" id="kolom-baru" data-kosong="Belum Ada Antrean Pesanan.">
+                                @forelse($antreanBaru ?? [] as $baru)
+                                <div class="kartu-antrean bg-white border border-gray-200 p-5 rounded-2xl shadow-sm hover:shadow-md transition" data-id-pesanan="{{ $baru['id_pesanan'] }}">
+                                    <div class="flex justify-between items-start border-b border-gray-100 pb-3 mb-3">
+                                        <div>
+                                            <h5 class="font-black text-2xl text-kurtbeans-dark">{{ $baru['id'] ?? '-' }}</h5>
+                                            <p class="text-xs text-gray-500 font-semibold mt-0.5">{{ $baru['pemesan'] ?? '-' }}</p>
+                                            <span class="text-xs font-bold bg-blue-50 text-blue-700 px-2 py-1 rounded">Meja {{ $baru['meja'] ?? '-' }}</span>
+                                        </div>
+                                        <span class="text-xs font-semibold text-gray-400">{{ $baru['waktu'] ?? '00:00' }} WIB</span>
+                                    </div>
+                                    <ul class="text-sm text-gray-600 font-medium space-y-1.5 mb-5 min-h-[60px]">
+                                        @foreach($baru['menu'] ?? [] as $m)
+                                            <li>• {{ $m }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" onclick="aksiBarista(this, {{ $baru['id_pesanan'] }}, 'proses')" class="w-full bg-kurtbeans-dark hover:bg-gray-800 text-white font-bold py-2.5 rounded-xl shadow-sm transition flex items-center justify-center gap-2 text-sm">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                                        Mulai Proses
+                                    </button>
+                                    <p class="text-[10px] text-center text-gray-400 mt-2 font-medium italic">&rarr; notif FCM ke pelanggan</p>
+                                </div>
+                                @empty
+                                    <p class="text-sm text-gray-400 italic text-center py-4">Belum Ada Antrean Pesanan.</p>
+                                @endforelse
+                            </div>
+                        </div>
 
                         <!-- KOLOM 2: SEDANG DIPROSES -->
                         <div class="bg-orange-50/20 p-6" x-show="filterStatus === 'semua' || filterStatus === 'diproses'">

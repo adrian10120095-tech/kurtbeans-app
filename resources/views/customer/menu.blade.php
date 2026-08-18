@@ -268,7 +268,13 @@
         <!-- ---------- DAFTAR MENU ---------- -->
         <main class="pt-6 pb-32 lg:pb-12">
 
-            @if($totalMenu === 0)
+                       @if(!empty($galatMenu))
+                <div class="rounded-2xl border border-dashed border-ember/50 bg-emberSoft px-6 py-16 text-center">
+                    <i class="fas fa-triangle-exclamation text-3xl text-ember"></i>
+                    <p class="mt-4 font-bold">{{ $galatMenu }}</p>
+                    <p class="mt-1 text-sm text-ink2">Muat ulang halaman setelah koneksi kembali stabil.</p>
+                </div>
+            @elseif($totalMenu === 0)
                 <div class="rounded-2xl border border-dashed border-line bg-white px-6 py-16 text-center">
                     <i class="fas fa-mug-hot text-3xl text-ink2/40"></i>
                     <p class="mt-4 font-bold">Menu belum tersedia</p>
