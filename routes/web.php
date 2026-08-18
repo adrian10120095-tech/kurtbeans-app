@@ -96,8 +96,9 @@ Route::middleware('auth')->group(function () {
         Route::patch('/diambil/{id}', [BaristaController::class, 'tandaiDiambil'])->name('barista.diambil');
     });
 
-    //Button Toggle Status Menu (Tersedia/Habis)
-    Route::patch('/admin/menu/{id}/toggle-status', [AdminController::class, 'toggleStatusMenu']);
+        // Tombol toggle status menu (Tersedia/Habis)
+    Route::patch('/admin/menu/{id}/toggle-status', [AdminController::class, 'toggleStatusMenu'])
+        ->name('admin.menu.toggle');
 });
 
 require __DIR__.'/auth.php'; // Rute otentikasi bawaan Breeze
