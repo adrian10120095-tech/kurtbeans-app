@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Pesanan;
 use App\Models\Notifikasi;
+use App\Services\SinkronisasiMidtrans;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Services\SinkronisasiMidtrans;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Laravel\Firebase\Facades\Firebase;
 
 class BaristaController extends Controller
 {
@@ -238,25 +241,14 @@ class BaristaController extends Controller
             return;
         }
 
-        // Nama class ditulis sebagai string agar aplikasi tetap berjalan
-        // walaupun paket kreait/laravel-firebase belum terpasang.
-        $firebase     = 'Kreait\Laravel\Firebase\Facades\Firebase';
-        $cloudMessage = 'Kreait\Firebase\Messaging\CloudMessage';
-
-        if (!class_exists($firebase) || !class_exists($cloudMessage)) {
-            Log::warning('Paket kreait/laravel-firebase belum terpasang, notifikasi dilewati.');
-            $catatan->update(['status' => 'Gagal']);
-            return;
-        }
-
         try {
-            $message = $cloudMessage::withTarget('token', $token)
+            $message = CloudMessage::withTarget('token', $token)
                 ->withNotification([
                     'title' => $judul,
                     'body'  => $pesan,
                 ]);
 
-            $firebase::messaging()->send($message);
+            Firebase::messaging()->send($message);
 
             $catatan->update([
                 'status'       => 'Terkirim',

@@ -79,11 +79,12 @@ namespace App\Models{
  * @property int $id_kategori
  * @property string $nama_menu
  * @property numeric $harga
- * @property int $stok
  * @property string|null $gambar
  * @property string|null $status_menu
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DetailPesanan> $detailPesanan
+ * @property-read int|null $detail_pesanan_count
  * @property-read \App\Models\Kategori $kategori
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu newQuery()
@@ -95,7 +96,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereIdMenu($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereNamaMenu($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereStatusMenu($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereStok($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Menu whereUpdatedAt($value)
  */
 	class Menu extends \Eloquent {}
@@ -246,28 +246,12 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * @property int $id
- * @property string $name
- * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string $password
- * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent {}
 }
